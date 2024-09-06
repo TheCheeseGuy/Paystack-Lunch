@@ -16,6 +16,7 @@ router.get('/fieldtrips', getAllFieldTrips)
 router.get('/asaactivity', getAllAsaActivity)
 router.get('/idcard',getAllIdCard)
 router.get('/rental', getAllLaptopRental)
+router.get('/return', returnFunc)
 
 
 // function checkStatus(req, res, next) {
@@ -23,6 +24,14 @@ router.get('/rental', getAllLaptopRental)
 //         .then((response) => response ? (res.status(200).send(response)) : (res.status(404).send()))
 //         .catch(next)
 // }
+
+function returnFunc (req, res, next){
+    try {
+        console.log(req.body)
+    } catch (error) {
+        next(error)
+    }
+}
 
 // function returnFunc(req, res, next) {
 //     try {
@@ -126,7 +135,7 @@ async function InitiatePaystack(data) {
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: `${process.env.PAYMENT_URL}}/transaction/initialize`,
+        url: `${process.env.PAYMENT_URL}/transaction/initialize`,
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${process.env.TOKEN}`,
@@ -153,14 +162,14 @@ function initiate(req, res, next) {
         })
 }
 
-function returnFunc(req, res, next) {
-    try {
-        transactionService.returnCall(req.body)
-    res.sendStatus(200)
-    } catch (error) {
-        next(error)
-    }
-}
+// function returnFunc(req, res, next) {
+//     try {
+//         transactionService.returnCall(req.body)
+//     res.sendStatus(200)
+//     } catch (error) {
+//         next(error)
+//     }
+// }
 
 
 
